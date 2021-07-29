@@ -2,6 +2,7 @@ import React from "react";
 import { Router, Route } from "react-router-dom";
 
 import Home from "./Home";
+import OptionChain from "./OptionChain";
 import Header from "./Header";
 import history from "../history";
 
@@ -14,6 +15,7 @@ const App = () => {
         <div>
           <Header />
           <Route path="/" exact component={Home}></Route>
+          <Route path="/oc_analyze" component={OptionChain}></Route>
         </div>
       </Router>
     </div>

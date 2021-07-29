@@ -5,7 +5,8 @@ const INTIAL_STATE = {
   label: "Index",
   indexList: [{ key: 's', value: "", text: '--Select--' }, { key: 'n', value: "NIFTY", text: 'NIFTY' }, { key: 'bn', value: "BANKNIFTY", text: 'BANKNIFTY' }, { key: 'fn', value: "FINNIFTY", text: 'FINNIFTY' }],
   index: "indices",
-  expiryDates: []
+  expiryDates: [],
+  data:{}
 };
 
 const confReducer = (state = INTIAL_STATE, action) => {
@@ -13,7 +14,9 @@ const confReducer = (state = INTIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_DATA:
       console.log(action.payload.data)
-      return { ...state, expiryDates: action.payload.data.records.expiryDates };
+      let expiryDates = action.payload.data.records.expiryDates
+      expiryDates.unshift('--Select--')
+      return { ...state, expiryDates, data:action.payload.data.records };
     case CHANGE_MODE:
       console.log(action.payload.mode)
       if (action.payload.mode === 'INDEX') {
@@ -21,7 +24,7 @@ const confReducer = (state = INTIAL_STATE, action) => {
       } else {
         let indexList = action.payload.data.map((stock, i) => ({ key: i, value: stock, text: stock }))
         indexList.unshift({ key: 's', value: "", text: '--Select--' })
-        return { ...state, mode: action.payload.mode, label: "Stock", index: 'equities', indexList }
+        return { ...INTIAL_STATE, mode: action.payload.mode, label: "Stock", index: 'equities', indexList }
       }
     default:
       return state;

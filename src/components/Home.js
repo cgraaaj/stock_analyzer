@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from 'lodash'
 
-import { fetchData, changeMode } from "../actions";
+import { fetchData, changeMode, analyzeOptionChain } from "../actions";
 import { Form, Field } from "react-final-form";
 
 class Home extends React.Component {
@@ -11,8 +11,9 @@ class Home extends React.Component {
   //   this.props.fetchData(this.props.index, this.props.symbol);
   // }
 
-  onFormSubmit = ({ index, symbol }) => {
-    this.props.fetchData(index, symbol);
+  onFormSubmit = (values) => {
+    console.log(values)
+    this.props.analyzeOptionChain({...values,data: this.props.data})
   };
 
   renderError({ error, touched }) {
@@ -33,10 +34,21 @@ class Home extends React.Component {
     return errors;
   };
 
+  onChangeIndex = (event,input) => {
+    console.log(event.target.value)
+    input.onChange(event.target.value)
+    this.props.fetchData(this.props.index, event.target.value);
+  }
+
+  onChangeExpiry = (event,input) => {
+    console.log(event.target.value)
+    input.onChange(event.target.value)
+  }
+
   renderButton = ({ input, label, meta }) => {
     return (
-      <div className="ui four column grid">
-        <div className="row">
+      <div className="ui two column centered grid">
+        <div className="four column centered row">
           <div className="column">
             <label>{label}</label>
           </div>
@@ -57,8 +69,8 @@ class Home extends React.Component {
 
   renderList = ({ input, label, options }) => {
     return (
-      <div className="ui four column grid">
-        <div className="row">
+      <div className="ui two column centered grid">
+        <div className="four column centered row">
           <div className="column">
             <label>{label}</label>
           </div>
@@ -68,10 +80,7 @@ class Home extends React.Component {
               <div className="menu">
                 <div className="item">Choice 1</div>
               </div>
-            </div> : <select className="ui search dropdown" onChange={(event) => {
-              console.log(event.target.value)
-              this.props.fetchData(this.props.index, event.target.value);
-            }}>
+            </div> : <select className="ui search dropdown" onChange={label === 'Expiry' ? (e)=> this.onChangeExpiry(e,input) : (e) => this.onChangeIndex(e,input)}>
               {options.map(option => <option key={option.key} value={option.value}>{option.text}</option>)}
             </select>}
 
@@ -89,7 +98,7 @@ class Home extends React.Component {
             onSubmit={this.onFormSubmit}
             initialValues={this.props.initialValues}
             // validate={this.validate}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, values }) => (
               <form
                 className="ui form error"
                 onSubmit={handleSubmit}
@@ -100,7 +109,7 @@ class Home extends React.Component {
                   label="Mode"
                 />
                 <Field
-                  name="label"
+                  name="index"
                   component={this.renderList}
                   label={this.props.label}
                   options={this.props.indexList}
@@ -111,6 +120,9 @@ class Home extends React.Component {
                   label="Expiry"
                   options={this.props.expiryDates}
                 />
+                <div className="ui two column centered grid">
+                  <button type="submit" className="ui primary button">Submit</button>
+                </div>
               </form>
             )}
           />
@@ -127,10 +139,11 @@ const mapStateToProps = (state) => {
     label: state.conf.label,
     indexList: state.conf.indexList,
     index: state.conf.index,
-    expiryDates: state.conf.expiryDates.map((expDate,i)=> ({key:i,value:expDate,text:expDate})),
+    expiryDates: state.conf.expiryDates.map((expDate, i) => ({ key: i, value: expDate, text: expDate })),
+    data: state.conf.data
   };
 };
 
-export default connect(mapStateToProps, { fetchData, changeMode })(
+export default connect(mapStateToProps, { fetchData, changeMode,analyzeOptionChain })(
   Home
 );

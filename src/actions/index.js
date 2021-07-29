@@ -2,7 +2,8 @@ import history from "../history";
 import { nseAPI } from "../apis/nse";
 import {
   FETCH_DATA,
-  CHANGE_MODE
+  CHANGE_MODE,
+  ANALYZE_OPTIONS
 } from "./types";
 
 export const fetchData = (index,symbol) => async (dispatch) => {
@@ -43,7 +44,11 @@ export const changeMode = (mode) =>async(dispatch)=>{
   })
 }
 
-export const analyzeOptionChanin= () => {
-  
+export const analyzeOptionChain= (data) => {
+  console.log(data)
   history.push("/oc_analyze")
+  return {
+    type:ANALYZE_OPTIONS,
+    payload:data
+  }
 }

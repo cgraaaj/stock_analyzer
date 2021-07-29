@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const nse = axios.create({
-  baseURL: "http://localhost:1234"
+  baseURL: process.env.REACT_APP_API_KEY
 });
 
 
