@@ -1,8 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 
-// import { } from "../actions";
+import { setModal } from "../actions";
 import Chart from "./BarCharts/Chart";
+import Modal from "./Modal"
 class OptionChain extends React.Component {
 
   renderChart = (data) => {
@@ -10,7 +11,7 @@ class OptionChain extends React.Component {
       paddingBottom: '56.25%', /* 16:9 */
       position: 'relative',
       height: 0
-    }} >
+    }} onClick={this.onClickChart(data)}>
       <div style={{
         position: 'absolute',
         top: '0',
@@ -23,15 +24,23 @@ class OptionChain extends React.Component {
     </div>)
   }
 
+  onClickChart = (data) => e => {
+    const modal = {
+      flag: !this.props.modalFlag,
+      data
+    }
+    this.props.setModal(modal)
+  }
+
   render() {
     return (<div>
       <div className="ui two column centered grid">
-      <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
-      </div>      
+        <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
+      </div>
       <div className="ui equal width grid">
-      <div className="equal width row">
-      <div className="ui two column centered grid">StrikePrice vs OI</div>
-      <div className="ui two column centered grid">StrikePrice vs CiOI</div>
+        <div className="equal width row">
+          <div className="ui two column centered grid">StrikePrice vs OI</div>
+          <div className="ui two column centered grid">StrikePrice vs CiOI</div>
         </div>
         <div className="equal width row">
           <div className="column">
@@ -42,6 +51,18 @@ class OptionChain extends React.Component {
           </div>
         </div>
       </div>
+      {this.props.modal.flag &&
+        this.props.modal.data ? (
+        <Modal
+          data={this.props.modal.data}
+          onDismiss={() => {
+            this.props.setModal({
+              flag: !this.props.modal.flag,
+              data: []
+            });
+          }}
+        />
+      ) : null}
     </div>)
   }
 }
@@ -52,8 +73,9 @@ const mapStateToProps = (state) => {
     timeStamp: state.oc.timeStamp,
     index: state.oc.selectedIndex,
     OIData: state.oc.OIData,
-    COIData: state.oc.COIData
+    COIData: state.oc.COIData,
+    modal: state.oc.modal,
   };
 };
 
-export default connect(mapStateToProps, {})(OptionChain);
+export default connect(mapStateToProps, { setModal })(OptionChain);

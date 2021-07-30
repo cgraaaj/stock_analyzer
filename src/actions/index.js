@@ -3,7 +3,8 @@ import { nseAPI } from "../apis/nse";
 import {
   FETCH_DATA,
   CHANGE_MODE,
-  ANALYZE_OPTIONS
+  ANALYZE_OPTIONS,
+  SET_MODAL
 } from "./types";
 
 export const fetchData = (index,symbol) => async (dispatch) => {
@@ -52,3 +53,10 @@ export const analyzeOptionChain= (data) => {
     payload:data
   }
 }
+
+export const setModal = (modal) => {
+  return {
+    type: SET_MODAL,
+    payload: modal,
+  };
+};

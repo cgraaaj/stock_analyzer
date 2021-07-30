@@ -1,4 +1,4 @@
-import { ANALYZE_OPTIONS } from "../actions/types";
+import { ANALYZE_OPTIONS, SET_MODAL } from "../actions/types";
 
 const INTIAL_STATE = {
   timeStamp: "",
@@ -10,6 +10,10 @@ const INTIAL_STATE = {
   selectedMode:"",
   selectedIndex:"",
   selectedExpiry:"",
+  modal: {
+    flag: false,
+    data:[]
+  },
 };
 
 const ocReducer = (state = INTIAL_STATE, action) => {
@@ -51,6 +55,11 @@ const ocReducer = (state = INTIAL_STATE, action) => {
         expiryDates: action.payload.data.expiryDates, OIData,COIData, strikePrices: action.payload.data.strikePrices,
         selectedMode:action.payload.mode,selectedExpiry:action.payload.expiry, selectedIndex: action.payload.index
       };
+      case SET_MODAL:
+        return {
+          ...state,
+          modal: action.payload,
+        };
     default:
       return state;
   }

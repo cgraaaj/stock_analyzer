@@ -6,7 +6,7 @@ const INTIAL_STATE = {
   indexList: [{ key: 's', value: "", text: '--Select--' }, { key: 'n', value: "NIFTY", text: 'NIFTY' }, { key: 'bn', value: "BANKNIFTY", text: 'BANKNIFTY' }, { key: 'fn', value: "FINNIFTY", text: 'FINNIFTY' }],
   index: "indices",
   expiryDates: [],
-  data:{}
+  data: {}
 };
 
 const confReducer = (state = INTIAL_STATE, action) => {
@@ -14,9 +14,13 @@ const confReducer = (state = INTIAL_STATE, action) => {
   switch (action.type) {
     case FETCH_DATA:
       console.log(action.payload.data)
-      let expiryDates = action.payload.data.records.expiryDates
-      expiryDates.unshift('--Select--')
-      return { ...state, expiryDates, data:action.payload.data.records };
+      let expiryDates = action.payload.data.records.expiryDates.map((expDate, i) => ({
+        key: i,
+        value: expDate,
+        text: expDate,
+      }))
+      expiryDates.unshift({ key: 's', value: "", text: '--Select--' })
+      return { ...state, expiryDates, data: action.payload.data.records };
     case CHANGE_MODE:
       console.log(action.payload.mode)
       if (action.payload.mode === 'INDEX') {
