@@ -73,7 +73,7 @@ class OptionChain extends React.Component {
         </div>
       </div>
       <div className="ui two column centered grid">
-        <button type="button" className="ui primary button" onClick={()=>this.downloadData(this.props.selectedIndex,this.props.OCData)}><i className="save icon"></i>Save as CSV</button>
+        <button type="button" className="ui primary button" onClick={()=>this.downloadData(this.props.selectedIndex,this.props.OCData)}><i className="save icon"></i>Save Option Chain data</button>
       </div>
       </div>}
       {this.props.modal.flag &&
