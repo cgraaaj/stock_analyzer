@@ -138,9 +138,8 @@ class Home extends React.Component {
                     type="submit"
                     className={
                       values.hasOwnProperty("expiry") &&
-                      values.expiry !== "--Select--"
-                        ? "ui primary button"
-                        : " ui disabled button"
+                        !_.isEmpty(values.expiry)
+                        ? "ui primary button" : "ui disabled button"
                     }
                   >
                     Submit

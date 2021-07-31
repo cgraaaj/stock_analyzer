@@ -1,8 +1,9 @@
 import axios from "axios";
 
-const nse = axios.create({
-  baseURL: process.env.REACT_APP_API_KEY
+export const nseAPI = axios.create({
+  baseURL: process.env.REACT_APP_NSE_API
 });
 
-
-export const nseAPI = nse 
+export const ocAnalyzeAPI= axios.create({
+  baseURL: process.env.REACT_APP_OCA_API
+})

@@ -1,9 +1,10 @@
-import { ANALYZE_OPTIONS, SET_MODAL } from "../actions/types";
+import { FETCH_DATA ,ANALYZE_OPTIONS, SET_MODAL } from "../actions/types";
 
 const INTIAL_STATE = {
   timeStamp: "",
   underlyingValue: 0,
   expiryDates: [],
+  OCData:{},
   OIData: [],
   COIData: [],
   strikePrices: [],
@@ -13,11 +14,13 @@ const INTIAL_STATE = {
   modal: {
     flag: false,
     data:[]
-  },
+  }
 };
 
 const ocReducer = (state = INTIAL_STATE, action) => {
   switch (action.type) {
+    case FETCH_DATA:
+      return { ...state, OCData: action.payload.data.records };
     case ANALYZE_OPTIONS:
       let filterData = action.payload.data.data.filter(d => d.expiryDate === action.payload.expiry)
       let OIData = filterData.map(d=>{

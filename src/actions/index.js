@@ -1,13 +1,15 @@
 import history from "../history";
-import { nseAPI } from "../apis/nse";
+import { nseAPI, ocAnalyzeAPI} from "../apis/nse";
 import {
   FETCH_DATA,
   CHANGE_MODE,
   ANALYZE_OPTIONS,
-  SET_MODAL
+  SET_MODAL,
+  NOTIFY,
+  DOWNLOAD_DATA,
 } from "./types";
 
-export const fetchData = (index,symbol) => async (dispatch) => {
+export const fetchData = (index, symbol) => async (dispatch) => {
   let response = "";
   console.log(index, symbol)
   try {
@@ -29,28 +31,28 @@ export const fetchData = (index,symbol) => async (dispatch) => {
   });
 };
 
-export const changeMode = (mode) =>async(dispatch)=>{
+export const changeMode = (mode) => async (dispatch) => {
   let response = "";
-  if (mode !== 'INDEX'){
+  if (mode !== 'INDEX') {
     response = await nseAPI.get('/equities')
     console.log(response.data)
     response = response.data
   }
-  dispatch( {
-    type:CHANGE_MODE,
-    payload:{
+  dispatch({
+    type: CHANGE_MODE,
+    payload: {
       mode,
       data: response
     }
   })
 }
 
-export const analyzeOptionChain= (data) => {
+export const analyzeOptionChain = (data) => {
   console.log(data)
   history.push("/oc_analyze")
   return {
-    type:ANALYZE_OPTIONS,
-    payload:data
+    type: ANALYZE_OPTIONS,
+    payload: data
   }
 }
 
@@ -59,4 +61,21 @@ export const setModal = (modal) => {
     type: SET_MODAL,
     payload: modal,
   };
+};
+
+export const downloadData = (index, data) => async (dispatch) => {
+  let response = "";
+  console.log(index, data)
+  try {
+    response = await ocAnalyzeAPI.post(`/download/${index}`, data)
+    response = response.data
+    console.log(response)
+  } catch (err) {
+    console.log(err)
+    response = err.response;
+  }
+  dispatch({
+    type: DOWNLOAD_DATA,
+    payload: { data: response },
+  });
 };

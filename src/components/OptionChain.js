@@ -1,9 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
+import _ from "lodash"
+import fileDownload from 'js-file-download'
+import axios from "axios";
 
 import { setModal } from "../actions";
 import Chart from "./BarCharts/Chart";
 import Modal from "./Modal"
+import { ocAnalyzeAPI} from "../apis/nse";
 class OptionChain extends React.Component {
 
   renderChart = (data) => {
@@ -32,11 +36,28 @@ class OptionChain extends React.Component {
     this.props.setModal(modal)
   }
 
+  downloadData = async(index,data) => {
+    let response =""
+    console.log("a")
+    try {
+      response = await ocAnalyzeAPI.post(`/download/${index}`, data,{
+        responseType:'blob'
+      })
+      response = response.data
+      console.log(response)
+      fileDownload(response,`${index}.xlsx`)
+    } catch (err) {
+      console.log(err)
+      response = err.response;
+    }
+  }
+
   render() {
     return (<div>
-      <div className="ui two column centered grid">
-        <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
-      </div>
+      {_.isEmpty(this.props.OIData)&& _.isEmpty(this.props.COIData)?<div className="ui two column centered grid">
+        <h3>Please Choose the Stock/Index and Expiry Date for Option Chain Analysis</h3>
+      </div>:<div>
+      
       <div className="ui equal width grid">
         <div className="equal width row">
           <div className="ui two column centered grid">StrikePrice vs OI</div>
@@ -51,6 +72,10 @@ class OptionChain extends React.Component {
           </div>
         </div>
       </div>
+      <div className="ui two column centered grid">
+        <button type="button" className="ui primary button" onClick={()=>this.downloadData(this.props.selectedIndex,this.props.OCData)}><i className="save icon"></i>Save as CSV</button>
+      </div>
+      </div>}
       {this.props.modal.flag &&
         this.props.modal.data ? (
         <Modal
@@ -72,9 +97,12 @@ const mapStateToProps = (state) => {
     underlyingValue: state.oc.underlyingValue,
     timeStamp: state.oc.timeStamp,
     index: state.oc.selectedIndex,
+    OCData: state.oc.OCData,
     OIData: state.oc.OIData,
     COIData: state.oc.COIData,
     modal: state.oc.modal,
+    selectedIndex:state.oc.selectedIndex,
+    selectedExpiry: state.oc.selectedExpiry,
   };
 };
 
