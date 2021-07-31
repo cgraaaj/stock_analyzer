@@ -57,7 +57,9 @@ class OptionChain extends React.Component {
       {_.isEmpty(this.props.OIData)&& _.isEmpty(this.props.COIData)?<div className="ui two column centered grid">
         <h3>Please Choose the Stock/Index and Expiry Date for Option Chain Analysis</h3>
       </div>:<div>
-      
+      <div className="ui two column centered grid">
+        <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
+      </div>
       <div className="ui equal width grid">
         <div className="equal width row">
           <div className="ui two column centered grid">StrikePrice vs OI</div>
