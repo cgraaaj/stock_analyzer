@@ -8,3 +8,4 @@ export const PREPARE_DOWNLOAD = "PREPARE_DOWNLOAD";
 
 export const NOTIFY= "NOTIFY";
 export const DOWNLOAD_DATA= "DOWNLOAD_DATA";
+export const SET_FORM_VALUES= "SET_FORM_VALUES";

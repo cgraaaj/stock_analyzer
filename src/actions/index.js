@@ -6,6 +6,7 @@ import {
   ANALYZE_OPTIONS,
   SET_MODAL,
   NOTIFY,
+  SET_FORM_VALUES,
   DOWNLOAD_DATA,
 } from "./types";
 
@@ -79,3 +80,10 @@ export const downloadData = (index, data) => async (dispatch) => {
     payload: { data: response },
   });
 };
+
+export const setFormValues = (formValues) => {
+  return {
+    type: SET_FORM_VALUES,
+    payload: {...formValues},
+  };
+}
