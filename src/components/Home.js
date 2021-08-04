@@ -43,7 +43,7 @@ class Home extends React.Component {
   onChangeIndex = (event, input) => {
     console.log(event.target.value);
     input.onChange(event.target.value);
-    this.props.fetchData(this.props.index, event.target.value);
+    if (event.target.value) { this.props.fetchData(this.props.index, event.target.value) }
   };
 
   onChangeExpiry = (event, input) => {
@@ -53,9 +53,11 @@ class Home extends React.Component {
 
   renderButton = ({ input, label, meta }) => {
     return (
-      <div className="six column centered row">
+      <div className="row">
         <div className="column">
+        <div class="ui right aligned container">
           <label>{label}</label>
+        </div>
         </div>
         <div className="column">
           <button
@@ -79,9 +81,11 @@ class Home extends React.Component {
 
   renderList = ({ input, label, options }) => {
     return (
-      <div className="six column centered row">
+      <div className="row">
         <div className="column">
+        <div class="ui right aligned container">
           <label>{label}</label>
+        </div>
         </div>
         <div className="column">
           {_.isEmpty(options) ? (
@@ -116,7 +120,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="ui container">
-        <div className="ui main right aligned text container">Data fetched at: {this.props.refreshedAt ? this.props.refreshedAt : '--'}</div>
+        <div className="ui right aligned text container">Data fetched at: {this.props.refreshedAt ? this.props.refreshedAt : '--'}</div>
         <div className="ui segment">
           <Form
             onSubmit={this.onFormSubmit}
@@ -124,7 +128,7 @@ class Home extends React.Component {
             // validate={this.validate}
             render={({ handleSubmit, values }) => (
               <form className="ui form error" onSubmit={handleSubmit}>
-                <div className="ui two column centered grid">
+                <div className="ui two column grid container">
                   <Field name="mode" component={this.renderButton} label="Mode" />
                   <Field
                     name="index"
@@ -138,8 +142,9 @@ class Home extends React.Component {
                     label="Expiry"
                     options={this.props.expiryDates}
                   />
-                  <div className="eight column centered row">
+                  <div className="row">
                     <div className="column">
+                    <div class="ui right aligned container">
                       <button
                         type="submit"
                         className={
@@ -150,6 +155,7 @@ class Home extends React.Component {
                       >
                         Submit
                       </button>
+                    </div>
                     </div>
                     <div className="column">
                       <button

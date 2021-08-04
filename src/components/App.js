@@ -3,6 +3,7 @@ import { Router, Route } from "react-router-dom";
 
 import Home from "./Home";
 import OptionChain from "./OptionChain";
+import Uptrend from "./Uptrend";
 import Header from "./Header";
 import history from "../history";
 
@@ -16,6 +17,7 @@ const App = () => {
           <Header />
           <Route path="/" exact component={Home}></Route>
           <Route path="/oc_analyze" component={OptionChain}></Route>
+          <Route path="/uptrend" component={Uptrend}></Route>
         </div>
       </Router>
     </div>

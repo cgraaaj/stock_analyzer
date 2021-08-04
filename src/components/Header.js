@@ -1,17 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
 class Header extends React.Component {
   render() {
     return (
       <div className="ui secondary  menu">
-        <Link to="/" className="item">
+        <NavLink exact={true} activeClassName='is-active' to="/" className="item">
           Home
-        </Link>
-        <Link to="/oc_analyze" className="item">
+        </NavLink>
+        <NavLink activeClassName='is-active' to="/oc_analyze" className="item">
           Option Chain
-        </Link>
+        </NavLink>
+        <NavLink activeClassName='is-active' to="/uptrend" className="item">
+          Uptrend
+        </NavLink>
       </div>
     );
   }

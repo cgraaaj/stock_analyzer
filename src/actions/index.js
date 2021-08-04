@@ -1,5 +1,5 @@
 import history from "../history";
-import { nseAPI, ocAnalyzeAPI} from "../apis/nse";
+import { nseAPI, ocAnalyzeAPI} from "../utils/api";
 import {
   FETCH_DATA,
   CHANGE_MODE,
@@ -8,6 +8,9 @@ import {
   NOTIFY,
   SET_FORM_VALUES,
   DOWNLOAD_DATA,
+  UPTREND,
+  CHANGE_OPTION,
+  UPTREND_DATE
 } from "./types";
 
 export const fetchData = (index, symbol) => async (dispatch) => {
@@ -86,4 +89,35 @@ export const setFormValues = (formValues) => {
     type: SET_FORM_VALUES,
     payload: {...formValues},
   };
+}
+
+export const getUptrend = () => async (dispatch) => {
+  let response = "";
+  try {
+    response = await ocAnalyzeAPI.get(`/uptrend`)
+    response = response.data
+    console.log(response)
+  } catch (err) {
+    console.log(err)
+    response = err.response;
+  }
+  dispatch({
+    type: UPTREND,
+    payload: response,
+  });
+};
+
+export const changeOption = (value) => {
+  console.log(value)
+  return {
+    type: CHANGE_OPTION,
+    payload: value,
+  };
+}
+
+export const selectDate = (date) =>{
+  return{
+    type: UPTREND_DATE,
+    payload: date
+  }
 }

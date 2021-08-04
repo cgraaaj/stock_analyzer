@@ -2,12 +2,11 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash"
 import fileDownload from 'js-file-download'
-import axios from "axios";
 
 import { setModal } from "../actions";
 import Chart from "./BarCharts/Chart";
 import Modal from "./Modal"
-import { ocAnalyzeAPI} from "../apis/nse";
+import { ocAnalyzeAPI} from "../utils/api";
 class OptionChain extends React.Component {
 
   renderChart = (data) => {
