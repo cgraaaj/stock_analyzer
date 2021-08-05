@@ -2,11 +2,16 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash"
 
-import { getUptrend, changeOption, selectDate } from "../actions";
+import { getUptrend, changeOption, changeDate } from "../actions";
 
 class OptionChain extends React.Component {
     componentDidMount() {
         this.props.getUptrend()
+    }
+    componentDidUpdate() {
+        if (!_.isEmpty(this.props.selectedDate)) {
+            this.props.changeDate(this.props.selectedDate)
+        }
     }
     onChangeRadio = (e) => {
         console.log(e.currentTarget.value)
@@ -14,7 +19,8 @@ class OptionChain extends React.Component {
     }
     onChangeDate = (e) => {
         console.log(e.currentTarget.value)
-        this.props.selectDate(e.currentTarget.value)
+        let dateObj = { key: 0, value: e.currentTarget.value, text: e.currentTarget.value }
+        this.props.changeDate(dateObj)
     }
     populateItems = (items) => {
         return items.map((item, i) =>
@@ -41,7 +47,7 @@ class OptionChain extends React.Component {
                                 </div>
                             ) : (
                                 <select
-                                    className="ui search dropdown"
+                                    className="ui dropdown"
                                     onChange={this.onChangeDate}
                                     value={this.props.selectedDate.value}
                                 >
@@ -91,4 +97,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, { getUptrend, selectDate, changeOption })(OptionChain);
+export default connect(mapStateToProps, { getUptrend, changeDate, changeOption })(OptionChain);

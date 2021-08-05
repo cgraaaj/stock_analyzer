@@ -12,4 +12,4 @@ export const SET_FORM_VALUES= "SET_FORM_VALUES";
 
 export const UPTREND = "UPTREND";
 export const CHANGE_OPTION = "CHANGE_OPTION";
-export const UPTREND_DATE = "UPTREND_DATE";
+export const CHANGE_DATE = "CHANGE_DATE";

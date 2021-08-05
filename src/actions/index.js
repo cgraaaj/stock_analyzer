@@ -10,7 +10,7 @@ import {
   DOWNLOAD_DATA,
   UPTREND,
   CHANGE_OPTION,
-  UPTREND_DATE
+  CHANGE_DATE
 } from "./types";
 
 export const fetchData = (index, symbol) => async (dispatch) => {
@@ -108,16 +108,16 @@ export const getUptrend = () => async (dispatch) => {
 };
 
 export const changeOption = (value) => {
-  console.log(value)
   return {
     type: CHANGE_OPTION,
     payload: value,
   };
 }
 
-export const selectDate = (date) =>{
+export const changeDate = (date) =>{
+  console.log(date)
   return{
-    type: UPTREND_DATE,
+    type: CHANGE_DATE,
     payload: date
   }
 }

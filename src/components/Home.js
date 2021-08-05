@@ -55,7 +55,7 @@ class Home extends React.Component {
     return (
       <div className="row">
         <div className="column">
-        <div class="ui right aligned container">
+        <div className="ui right aligned container">
           <label>{label}</label>
         </div>
         </div>
@@ -83,7 +83,7 @@ class Home extends React.Component {
     return (
       <div className="row">
         <div className="column">
-        <div class="ui right aligned container">
+        <div className="ui right aligned container">
           <label>{label}</label>
         </div>
         </div>
@@ -144,7 +144,7 @@ class Home extends React.Component {
                   />
                   <div className="row">
                     <div className="column">
-                    <div class="ui right aligned container">
+                    <div className="ui right aligned container">
                       <button
                         type="submit"
                         className={
