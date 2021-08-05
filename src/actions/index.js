@@ -1,5 +1,5 @@
 import history from "../history";
-import { nseAPI, ocAnalyzeAPI} from "../utils/api";
+import { nseAPI, ocAnalyzeAPI } from "../utils/api";
 import {
   FETCH_DATA,
   CHANGE_MODE,
@@ -8,6 +8,7 @@ import {
   NOTIFY,
   SET_FORM_VALUES,
   DOWNLOAD_DATA,
+  GET_OPTION_CHAIN,
   UPTREND,
   CHANGE_OPTION,
   CHANGE_DATE
@@ -67,11 +68,36 @@ export const setModal = (modal) => {
   };
 };
 
-export const downloadData = (index, data) => async (dispatch) => {
+export const getOptionChain = (expiry, data) => async (dispatch) => {
+  let response = "";
+  console.log(expiry, data)
+  try {
+    response = await ocAnalyzeAPI.post(`/option_chain`, data, {
+      params: {
+        expiry
+      }
+    })
+    response = response.data
+    console.log(response)
+  } catch (err) {
+    console.log(err)
+    response = err.response;
+  }
+  dispatch({
+    type: GET_OPTION_CHAIN,
+    payload: { data: response },
+  });
+};
+
+export const downloadData = (index,expiry, data) => async (dispatch) => {
   let response = "";
   console.log(index, data)
   try {
-    response = await ocAnalyzeAPI.post(`/download/${index}`, data)
+    response = await ocAnalyzeAPI.post(`/download/${index}`, data,{
+      params: {
+        expiry
+      }
+    })
     response = response.data
     console.log(response)
   } catch (err) {
@@ -87,7 +113,7 @@ export const downloadData = (index, data) => async (dispatch) => {
 export const setFormValues = (formValues) => {
   return {
     type: SET_FORM_VALUES,
-    payload: {...formValues},
+    payload: { ...formValues },
   };
 }
 
@@ -114,10 +140,11 @@ export const changeOption = (value) => {
   };
 }
 
-export const changeDate = (date) =>{
+export const changeDate = (date) => {
   console.log(date)
-  return{
+  return {
     type: CHANGE_DATE,
     payload: date
   }
 }
+

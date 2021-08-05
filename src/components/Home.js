@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchData, changeMode, analyzeOptionChain, setFormValues } from "../actions";
+import { fetchData, changeMode, analyzeOptionChain, setFormValues,getOptionChain } from "../actions";
 import { Form, Field } from "react-final-form";
 
 class Home extends React.Component {
@@ -14,6 +14,7 @@ class Home extends React.Component {
   onFormSubmit = (values) => {
     console.log(values);
     this.props.analyzeOptionChain({ ...values, data: this.props.data });
+    this.props.getOptionChain(values.expiry,this.props.data)
     this.props.setFormValues(values)
   };
 
@@ -198,5 +199,6 @@ export default connect(mapStateToProps, {
   fetchData,
   changeMode,
   analyzeOptionChain,
-  setFormValues
+  setFormValues,
+  getOptionChain
 })(Home);

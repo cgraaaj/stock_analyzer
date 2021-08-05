@@ -1,4 +1,4 @@
-import { FETCH_DATA ,ANALYZE_OPTIONS, SET_MODAL } from "../actions/types";
+import { FETCH_DATA ,ANALYZE_OPTIONS, SET_MODAL, GET_OPTION_CHAIN } from "../actions/types";
 
 const INTIAL_STATE = {
   timeStamp: "",
@@ -11,6 +11,7 @@ const INTIAL_STATE = {
   selectedMode:"",
   selectedIndex:"",
   selectedExpiry:"",
+  OCTable:{},
   modal: {
     flag: false,
     data:[]
@@ -63,6 +64,12 @@ const ocReducer = (state = INTIAL_STATE, action) => {
           ...state,
           modal: action.payload,
         };
+      case GET_OPTION_CHAIN:
+        console.log(action.payload)
+        return{
+          ...state,
+          OCTable: action.payload.data
+        }
     default:
       return state;
   }

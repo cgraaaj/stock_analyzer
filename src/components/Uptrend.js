@@ -19,8 +19,7 @@ class OptionChain extends React.Component {
     }
     onChangeDate = (e) => {
         console.log(e.currentTarget.value)
-        let dateObj = { key: 0, value: e.currentTarget.value, text: e.currentTarget.value }
-        this.props.changeDate(dateObj)
+        this.props.changeDate(e.currentTarget.value)
     }
     populateItems = (items) => {
         return items.map((item, i) =>
@@ -64,11 +63,11 @@ class OptionChain extends React.Component {
                 <div className="ui two column grid container">
                     <div className="ui radio checkbox">
                         <input type="radio" name="nifty" onChange={this.onChangeRadio} checked={this.props.option === 'nifty'} value='nifty' />
-                        <label>NIFTY</label>
+                        <label>Index</label>
                     </div>
                     <div className="ui radio checkbox">
                         <input type="radio" name="non_nifty" onChange={this.onChangeRadio} checked={this.props.option === 'non_nifty'} value='non_nifty' />
-                        <label>Non-NIFTY</label>
+                        <label>Non-Index</label>
                     </div>
                 </div>
                 <div className="ui three column doubling grid container">
