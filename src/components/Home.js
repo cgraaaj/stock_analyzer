@@ -88,7 +88,7 @@ class Home extends React.Component {
             <label>{label}</label>
           </div>
         </div>
-        <div className="four wide column">
+        <div className="column">
           {_.isEmpty(options) ? (
             <div className="ui disabled dropdown">
               Select <i className="dropdown icon"></i>
