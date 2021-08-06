@@ -76,20 +76,28 @@ class OptionChain extends React.Component {
                 </div>
                 <div className="ui two column doubling grid container">
                     <div className="column">
-                        <div className="segments">
-                            <div className="ui center aligned segment">Uptrend</div>
-                            <div className="ui center aligned segment">
-                                {this.populateItems(this.props.uptrend)}
-                            </div>
-                        </div>
+                        {_.isUndefined(this.props.uptrend) ? <div className="ui loading segment"></div> :
+                            <div className="segments">
+                                <div className="ui center aligned segment">Uptrend</div>
+                                {_.isEmpty(this.props.uptrend)?<div className="ui center aligned segment">
+                                    -- No Data available -- 
+                                </div>:<div className="ui center aligned segment">
+                                    {this.populateItems(this.props.uptrend)}
+                                </div>}
+                                
+                            </div>}
                     </div>
                     <div className="column">
-                        <div className="segments">
-                            <div className="ui center aligned segment">Volume Based Uptrend</div>
-                            <div className="ui center aligned segment">
-                                {this.populateItems(this.props.uptrendWithVolume)}
-                            </div>
-                        </div>
+                        {_.isUndefined(this.props.uptrendWithVolume) ? <div className="ui loading segment"></div> :
+                            <div className="segments">
+                                <div className="ui center aligned segment">Volume Based Uptrend</div>
+                                {_.isEmpty(this.props.uptrendWithVolume)?<div className="ui center aligned segment">
+                                    -- No Data available -- 
+                                </div>:
+                                <div className="ui center aligned segment">
+                                    {this.populateItems(this.props.uptrendWithVolume)}
+                                </div>}
+                            </div>}
                     </div>
                 </div>
             </div>

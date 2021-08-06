@@ -6,8 +6,8 @@ const INTIAL_STATE = {
     dates: [],
     selectedDate: {},
     option: "nifty",
-    uptrend: [],
-    uptrendWithVolume: []
+    uptrend: undefined,
+    uptrendWithVolume: undefined
 };
 
 const setUptrendData = (data, dateObj, option) => {
