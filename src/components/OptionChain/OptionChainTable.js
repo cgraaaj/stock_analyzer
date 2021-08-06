@@ -19,16 +19,29 @@ class OptionChainTable extends React.Component {
     let headers = Object.keys(this.props.tableData)
     let rows = Object.keys(this.props.tableData[headers[0]])
     return (
-      <table className="ui celled table">
-        <thead>
-          <tr>
-            {headers.map((header, i) => <th key={i}>{header}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {this.renderRows(this.props.tableData, rows)}
-        </tbody>
-      </table>
+      <div className="ui container">
+        <div className="ui segments">
+          <div className="ui segment">
+            <div className="ui two column centered grid">
+              <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
+            </div>
+          </div>
+          <div className="ui segment">
+          <div style={{height:"550px",overflow:"auto"}}>
+            <table className="ui celled table" style={{borderTop:"none"}}>
+              <thead style={{position:"sticky",top:0,zIndex:1,boxSizing:"border-box"}}>
+                <tr>
+                  {headers.map((header, i) => <th key={i}>{header}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {this.renderRows(this.props.tableData, rows)}
+              </tbody>
+            </table>
+          </div>
+          </div>
+        </div>
+      </div>
     )
   }
 }
@@ -36,7 +49,10 @@ const mapStateToProps = (state) => {
   let tableData = JSON.parse(sessionStorage.getItem('tableData'))
   console.log(tableData)
   return {
-    tableData
+    tableData: tableData.data,
+    index: tableData.index,
+    underlyingValue: tableData.underlyingValue,
+    timeStamp: tableData.timeStamp
   };
 };
 

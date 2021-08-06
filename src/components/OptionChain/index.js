@@ -29,7 +29,13 @@ class OptionChain extends React.Component {
   }
 
   renderTable =()=>{
-    sessionStorage.setItem('tableData', JSON.stringify(this.props.OCTable))
+    let OCTableData = {}
+    OCTableData['index'] = this.props.index
+    OCTableData['underlyingValue'] = this.props.underlyingValue
+    OCTableData['timeStamp']= this.props.timeStamp
+    OCTableData['data']=this.props.OCTable
+    console.log(OCTableData)
+    sessionStorage.setItem('tableData', JSON.stringify(OCTableData))
     window.open("/option_chain_table", "_blank")
   }
 
