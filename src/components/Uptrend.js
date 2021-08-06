@@ -31,9 +31,9 @@ class OptionChain extends React.Component {
     render() {
         return (<div className="ui container">
             <div className="ui segment">
-                <div className="ui two column grid container">
-                    <div className="row">
-                        <div className="column">
+                <div className="ui grid">
+                    <div className="four column centered row">
+                        <div className="right four wide aligned column">
                             <label>Date</label>
                         </div>
                         <div className="column">
@@ -59,25 +59,37 @@ class OptionChain extends React.Component {
                             )}
                         </div>
                     </div>
+                    <div className="four column centered row">
+                        <div className="right alinged four wide column">
+                            <div className="ui radio checkbox">
+                                <input type="radio" name="nifty" onChange={this.onChangeRadio} checked={this.props.option === 'nifty'} value='nifty' />
+                                <label>Index</label>
+                            </div>
+                        </div>
+                        <div className="column">
+                            <div className="ui radio checkbox">
+                                <input type="radio" name="non_nifty" onChange={this.onChangeRadio} checked={this.props.option === 'non_nifty'} value='non_nifty' />
+                                <label>Non-Index</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="ui two column grid container">
-                    <div className="ui radio checkbox">
-                        <input type="radio" name="nifty" onChange={this.onChangeRadio} checked={this.props.option === 'nifty'} value='nifty' />
-                        <label>Index</label>
-                    </div>
-                    <div className="ui radio checkbox">
-                        <input type="radio" name="non_nifty" onChange={this.onChangeRadio} checked={this.props.option === 'non_nifty'} value='non_nifty' />
-                        <label>Non-Index</label>
-                    </div>
-                </div>
-                <div className="ui three column doubling grid container">
+                <div className="ui two column doubling grid container">
                     <div className="column">
-                        <div className="ui segment">Uptrend</div>
-                        {this.populateItems(this.props.uptrend)}
+                        <div className="segments">
+                            <div className="ui center aligned segment">Uptrend</div>
+                            <div className="ui center aligned segment">
+                                {this.populateItems(this.props.uptrend)}
+                            </div>
+                        </div>
                     </div>
                     <div className="column">
-                        <div className="ui segment">Volume Based Uptrend</div>
-                        {this.populateItems(this.props.uptrendWithVolume)}
+                        <div className="segments">
+                            <div className="ui center aligned segment">Volume Based Uptrend</div>
+                            <div className="ui center aligned segment">
+                                {this.populateItems(this.props.uptrendWithVolume)}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

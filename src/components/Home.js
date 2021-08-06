@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchData, changeMode, analyzeOptionChain, setFormValues,getOptionChain } from "../actions";
+import { fetchData, changeMode, analyzeOptionChain, setFormValues, getOptionChain } from "../actions";
 import { Form, Field } from "react-final-form";
 
 class Home extends React.Component {
@@ -14,7 +14,7 @@ class Home extends React.Component {
   onFormSubmit = (values) => {
     console.log(values);
     this.props.analyzeOptionChain({ ...values, data: this.props.data });
-    this.props.getOptionChain(values.expiry,this.props.data)
+    this.props.getOptionChain(values.expiry, this.props.data)
     this.props.setFormValues(values)
   };
 
@@ -56,9 +56,9 @@ class Home extends React.Component {
     return (
       <div className="row">
         <div className="column">
-        <div className="ui right aligned container">
-          <label>{label}</label>
-        </div>
+          <div className="ui right aligned container">
+            <label>{label}</label>
+          </div>
         </div>
         <div className="column">
           <button
@@ -84,9 +84,9 @@ class Home extends React.Component {
     return (
       <div className="row">
         <div className="column">
-        <div className="ui right aligned container">
-          <label>{label}</label>
-        </div>
+          <div className="ui right aligned container">
+            <label>{label}</label>
+          </div>
         </div>
         <div className="column">
           {_.isEmpty(options) ? (
@@ -121,61 +121,71 @@ class Home extends React.Component {
   render() {
     return (
       <div className="ui container">
-        <div className="ui right aligned text container">Data fetched at: {this.props.refreshedAt ? this.props.refreshedAt : '--'}</div>
-        <div className="ui segment">
-          <Form
-            onSubmit={this.onFormSubmit}
-            initialValues={this.props.initialValues}
-            // validate={this.validate}
-            render={({ handleSubmit, values }) => (
-              <form className="ui form error" onSubmit={handleSubmit}>
-                <div className="ui two column grid container">
-                  <Field name="mode" component={this.renderButton} label="Mode" />
-                  <Field
-                    name="index"
-                    component={this.renderList}
-                    label={this.props.label}
-                    options={this.props.indexList}
+        <div className="ui segments">
+          <div className="ui segment">
+            <div className="ui two column centered grid">Data fetched at: {this.props.refreshedAt ? this.props.refreshedAt : '--'}</div>
+          </div>
+          <div className="ui segment">
+            <div className="ui one column centered grid">
+              <div className="column">
+                <div className="ui segment">
+                  <Form
+                    onSubmit={this.onFormSubmit}
+                    initialValues={this.props.initialValues}
+                    // validate={this.validate}
+                    render={({ handleSubmit, values }) => (
+                      <form className="ui form error" onSubmit={handleSubmit}>
+                        <div className="ui two column grid container">
+                          <Field name="mode" component={this.renderButton} label="Mode" />
+                          <Field
+                            name="index"
+                            component={this.renderList}
+                            label={this.props.label}
+                            options={this.props.indexList}
+                          />
+                          <Field
+                            name="expiry"
+                            component={this.renderList}
+                            label="Expiry"
+                            options={this.props.expiryDates}
+                          />
+                          <div className="row">
+                            <div className="column">
+                              <div className="ui right aligned container">
+                                <button
+                                  type="submit"
+                                  className={
+                                    values.hasOwnProperty("expiry") &&
+                                      !_.isEmpty(values.expiry)
+                                      ? "ui primary button" : "ui disabled button"
+                                  }
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            </div>
+                            <div className="column">
+                              <button
+                                type="button"
+                                className={
+                                  values.hasOwnProperty("index") &&
+                                    !_.isEmpty(values.index)
+                                    ? "ui secondary button" : "ui disabled button"
+                                }
+                                onClick={() => { this.onClickRefresh(values) }}
+                              >
+                                Refresh
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </form>
+                    )}
                   />
-                  <Field
-                    name="expiry"
-                    component={this.renderList}
-                    label="Expiry"
-                    options={this.props.expiryDates}
-                  />
-                  <div className="row">
-                    <div className="column">
-                    <div className="ui right aligned container">
-                      <button
-                        type="submit"
-                        className={
-                          values.hasOwnProperty("expiry") &&
-                            !_.isEmpty(values.expiry)
-                            ? "ui primary button" : "ui disabled button"
-                        }
-                      >
-                        Submit
-                      </button>
-                    </div>
-                    </div>
-                    <div className="column">
-                      <button
-                        type="button"
-                        className={
-                          values.hasOwnProperty("index") &&
-                            !_.isEmpty(values.index)
-                            ? "ui secondary button" : "ui disabled button"
-                        }
-                        onClick={() => { this.onClickRefresh(values) }}
-                      >
-                        Refresh
-                      </button>
-                    </div>
-                  </div>
                 </div>
-              </form>
-            )}
-          />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

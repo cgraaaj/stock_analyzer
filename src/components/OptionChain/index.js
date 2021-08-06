@@ -7,7 +7,7 @@ import { setModal } from "../../actions";
 import Chart from "../BarCharts/Chart";
 import Modal from "../Modal"
 import { ocAnalyzeAPI } from "../../utils/api";
-import { optionChainTableRender } from './OptionChainTable'
+
 class OptionChain extends React.Component {
 
   renderChart = (data) => {
@@ -26,6 +26,11 @@ class OptionChain extends React.Component {
         <Chart chartData={data} />
       </div>
     </div>)
+  }
+
+  renderTable =()=>{
+    sessionStorage.setItem('tableData', JSON.stringify(this.props.OCTable))
+    window.open("/option_chain_table", "_blank")
   }
 
   onClickChart = (data) => e => {
@@ -81,11 +86,13 @@ class OptionChain extends React.Component {
             </div>
           </div>
           <div className="ui segment">
-            {_.isEmpty(this.props.OCTable)?null:optionChainTableRender(this.props.OCTable)}
-          </div>
-          <div className="ui segment">
             <div className="ui two column centered grid">
+              <div className="right aligned column">
+              <button type="button" className="ui primary button" onClick={() => {this.renderTable()}}><i className="external alternate icon"></i>View Option Chain data</button>
+              </div>
+              <div className="column">
               <button type="button" className="ui primary button" onClick={() => this.downloadData(this.props.selectedIndex, this.props.OCData)}><i className="save icon"></i>Save Option Chain data</button>
+            </div>
             </div>
           </div>
 
