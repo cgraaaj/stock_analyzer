@@ -11,7 +11,8 @@ import {
   GET_OPTION_CHAIN,
   UPTREND,
   CHANGE_OPTION,
-  CHANGE_DATE
+  CHANGE_DATE,
+  RESET
 } from "./types";
 
 export const fetchData = (index, symbol) => async (dispatch) => {
@@ -35,6 +36,13 @@ export const fetchData = (index, symbol) => async (dispatch) => {
     payload: { data: response },
   });
 };
+
+export const reset = () => {
+  return {
+    type:RESET,
+    payload:{}
+  }
+}
 
 export const changeMode = (mode) => async (dispatch) => {
   let response = "";

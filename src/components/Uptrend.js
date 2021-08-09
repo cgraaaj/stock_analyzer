@@ -74,9 +74,21 @@ class OptionChain extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="ui two column doubling grid container">
-                    <div className="column">
-                        {_.isUndefined(this.props.uptrend) ? <div className="ui loading segment"></div> :
+
+                {_.isUndefined(this.props.uptrend) || _.isUndefined(this.props.uptrendWithVolume) ?
+                    <div className="ui container">
+                        <div style={{ height: "250px", width: "100%" }} className="ui segment">
+                            <div className="ui active inverted dimmer">
+                                <div className="ui text loader">
+                                    Loading
+                                </div>
+                            </div>
+                            <p></p>
+                        </div>
+                    </div> :
+                    <div className="ui two column doubling grid container">
+                        <div className="column">
+                            {/* {_.isUndefined(this.props.uptrend) ? <div className="ui loading segment"></div> : */}
                             <div className="segments">
                                 <div className="ui center aligned segment">Uptrend</div>
                                 {_.isEmpty(this.props.uptrend) ? <div className="ui center aligned segment">
@@ -86,10 +98,10 @@ class OptionChain extends React.Component {
                                         {this.populateItems(this.props.uptrend)}
                                     </div>
                                 </div>}
-                            </div>}
-                    </div>
-                    <div className="column">
-                        {_.isUndefined(this.props.uptrendWithVolume) ? <div className="ui loading segment"></div> :
+                            </div>
+                        </div>
+                        <div className="column">
+                            {/* {_.isUndefined(this.props.uptrendWithVolume) ? <div className="ui loading segment"></div> : */}
                             <div className="segments">
                                 <div className="ui center aligned segment">Volume Based Uptrend</div>
                                 {_.isEmpty(this.props.uptrendWithVolume) ? <div className="ui center aligned segment">
@@ -100,9 +112,10 @@ class OptionChain extends React.Component {
                                             {this.populateItems(this.props.uptrendWithVolume)}
                                         </div>
                                     </div>}
-                            </div>}
-                    </div>
-                </div>
+                            </div>
+                            {/* } */}
+                        </div>
+                    </div>}
             </div>
         </div>)
     }

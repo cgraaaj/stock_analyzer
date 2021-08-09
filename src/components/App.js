@@ -18,9 +18,9 @@ const App = () => {
           <Header />
           <Route path="/" exact component={Home}></Route>
           <Route path="/oc_analyze" component={OptionChain}></Route>
-          <Route path="/option_chain_table" component={OptionChainTable}></Route>
           <Route path="/uptrend" component={Uptrend}></Route>
         </div>
+          <Route path="/option_chain_table" component={OptionChainTable}></Route>
       </Router>
     </div>
   );

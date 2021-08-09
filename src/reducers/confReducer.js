@@ -1,4 +1,4 @@
-import { FETCH_DATA, CHANGE_MODE, SET_FORM_VALUES } from "../actions/types";
+import { FETCH_DATA, CHANGE_MODE, SET_FORM_VALUES,RESET } from "../actions/types";
 
 const INTIAL_STATE = {
   label: "Index",
@@ -37,6 +37,8 @@ const confReducer = (state = INTIAL_STATE, action) => {
       }
     case SET_FORM_VALUES:
       return { ...state, formValues: { ...state.formValues, mode: action.payload.mode, index: action.payload.index, expiry: action.payload.expiry} }
+    case RESET:
+      return INTIAL_STATE
     default:
       return state;
   }

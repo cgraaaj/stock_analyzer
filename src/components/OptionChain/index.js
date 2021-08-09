@@ -72,7 +72,7 @@ class OptionChain extends React.Component {
         </div> : <div className="ui segments">
           <div className="ui segment">
             <div className="ui two column centered grid">
-              <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
+              <h4 style={{margin:"10px"}} >Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
             </div>
           </div>
           <div className="ui segment">
@@ -82,10 +82,10 @@ class OptionChain extends React.Component {
                 <div className="ui two column centered grid">StrikePrice vs CiOI</div>
               </div>
               <div className="equal width row">
-                <div className="column">
+                <div className="column" data-tooltip="Click To Enlarge" data-position="top left">
                   {this.renderChart(this.props.OIData)}
                 </div>
-                <div className="column">
+                <div className="column" data-tooltip="Click To Enlarge" data-position="top right">
                   {this.renderChart(this.props.COIData)}
                 </div>
               </div>

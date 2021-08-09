@@ -23,22 +23,22 @@ class OptionChainTable extends React.Component {
         <div className="ui segments">
           <div className="ui segment">
             <div className="ui two column centered grid">
-              <h4>Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
+              <h4 style={{margin:"10px"}} >Underlying value of  {this.props.index} is {this.props.underlyingValue} as on {this.props.timeStamp}</h4>
             </div>
           </div>
           <div className="ui segment">
-          <div style={{height:"550px",overflow:"auto"}}>
-            <table className="ui celled table" style={{borderTop:"none"}}>
-              <thead style={{position:"sticky",top:0,zIndex:1,boxSizing:"border-box"}}>
-                <tr>
-                  {headers.map((header, i) => <th key={i}>{header}</th>)}
-                </tr>
-              </thead>
-              <tbody>
-                {this.renderRows(this.props.tableData, rows)}
-              </tbody>
-            </table>
-          </div>
+            <div style={{ height: "550px", overflow: "auto" }}>
+              <table className="ui celled table" style={{ borderTop: "none" }}>
+                <thead style={{ position: "sticky", top: 0, zIndex: 1, boxSizing: "border-box" }}>
+                  <tr>
+                    {headers.map((header, i) => <th key={i}>{header}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.renderRows(this.props.tableData, rows)}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

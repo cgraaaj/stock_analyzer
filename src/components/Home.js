@@ -2,15 +2,17 @@ import React from "react";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { fetchData, changeMode, analyzeOptionChain, setFormValues, getOptionChain } from "../actions";
-import { Form, Field } from "react-final-form";
+import { fetchData, changeMode, analyzeOptionChain, setFormValues, getOptionChain,reset } from "../actions";
+import { Form, Field, FormSpy } from "react-final-form";
 
 class Home extends React.Component {
 
   // componentDidMount() {
   //   this.props.fetchData(this.props.index, this.props.symbol);
   // }
-
+  // exposeValues=(data)=>{
+  //   console.log(data)
+  // }
   onFormSubmit = (values) => {
     console.log(values);
     this.props.analyzeOptionChain({ ...values, data: this.props.data });
@@ -18,9 +20,12 @@ class Home extends React.Component {
     this.props.setFormValues(values)
   };
 
-  onClickRefresh = (values) => {
-    console.log(values)
-    this.props.fetchData(this.props.index, values.index);
+  onClickRefresh = () => {
+    console.log(this.props)
+    this.props.fetchData(this.props.index, this.props.initialValues.index);
+  }
+  onClickReset = () => {
+    this.props.reset();
   }
 
   renderError({ error, touched }) {
@@ -123,7 +128,15 @@ class Home extends React.Component {
       <div className="ui container">
         <div className="ui segments">
           <div className="ui segment">
-            <div className="ui two column centered grid">Data fetched at: {this.props.refreshedAt ? this.props.refreshedAt : '--'}</div>
+            <div className="ui one column centered grid">
+            <div className="row">
+              <h4 style={{margin:"10px"}}>Data fetched at: {this.props.refreshedAt ? this.props.refreshedAt : '--'}</h4>
+              {this.props.initialValues.expiry? 
+              <i className="sync icon" onClick={this.onClickRefresh} style={{cursor:"pointer",margin:"10px"}}>
+              </i>
+              :null}
+            </div>
+            </div>
           </div>
           <div className="ui segment">
             <div className="ui one column centered grid">
@@ -131,10 +144,17 @@ class Home extends React.Component {
                 <div className="ui segment">
                   <Form
                     onSubmit={this.onFormSubmit}
+                    // subscription={{values:{...this.props}}}
                     initialValues={this.props.initialValues}
                     // validate={this.validate}
-                    render={({ handleSubmit, values }) => (
+                    render={({ handleSubmit, values }) => (  
                       <form className="ui form error" onSubmit={handleSubmit}>
+                        {/* <FormSpy
+                          subscription={{ values: true }}
+                          onChange={(state) => {
+                            const { values } = state
+                            this.exposeValues({ values })
+                          }} /> */}
                         <div className="ui two column grid container">
                           <Field name="mode" component={this.renderButton} label="Mode" />
                           <Field
@@ -172,9 +192,9 @@ class Home extends React.Component {
                                     !_.isEmpty(values.index)
                                     ? "ui secondary button" : "ui disabled button"
                                 }
-                                onClick={() => { this.onClickRefresh(values) }}
+                                onClick={this.onClickReset}
                               >
-                                Refresh
+                                Reset
                               </button>
                             </div>
                           </div>
@@ -210,5 +230,5 @@ export default connect(mapStateToProps, {
   changeMode,
   analyzeOptionChain,
   setFormValues,
-  getOptionChain
+  getOptionChain,reset
 })(Home);
