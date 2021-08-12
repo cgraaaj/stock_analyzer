@@ -26,7 +26,7 @@ const uptrendReducer = (state = INTIAL_STATE, action) => {
         case UPTREND:
             console.log(action.payload)
             let dates = action.payload.data.map((dateObj, i) => ({ key: i, value: dateObj.date, text: dateObj.date }))
-            let selectedDate = dates[dates.length - 1]
+            let selectedDate = dates[0]
             return { ...state, data: action.payload.data, dates, selectedDate }
         case CHANGE_OPTION: {
             let { uptrend, uptrendWithVolume } = setUptrendData(state.data, state.selectedDate, action.payload)
